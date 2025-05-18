@@ -1,0 +1,27 @@
+/* Adds spacing above any element with the 'container' class */
+.container {
+  margin-top: 30px;
+}
+
+/* Style all input fields to be taller and full width */
+input {
+  height: 35px;
+  width: 100%;
+}
+
+/* Removes bullet points and spacing from a <ul> with ID 'messages' */
+#messages {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Add padding to each list item inside #messages */
+#messages li {
+  padding: 5px 10px;
+}
+
+/* Style every odd-numbered message with a light gray background */
+#message li:nth-child(odd) {
+  background: #aaa;
+}
