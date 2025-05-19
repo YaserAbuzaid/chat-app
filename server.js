@@ -38,7 +38,7 @@ io.on('connect', socket => {
 
     // Listen for a 'thankyou' event from the client
     // Just for demonstration — you could log or do something on response
-    socket.on('thankyou', () => {
-        console.log(socket.id, "says thank you!")
+    socket.on('thankyou', data => {
+        console.log("message from client", data)
     })
 })

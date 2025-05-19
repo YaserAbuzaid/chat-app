@@ -15,5 +15,5 @@ socket.on('welcome', data => {
 
     // Emit a custom event called 'thankyou' to the server
     // This sends a message back — you could attach data too (ex: socket.emit('thankyou', 'Hello!'))
-    socket.emit('thankyou')
+    socket.emit('thankyou', [4,5,6])
 })
