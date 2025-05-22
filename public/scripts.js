@@ -12,7 +12,7 @@ const socket = io('http://localhost:6969')
 socket.on('welcome', data => {
     // Log the data received from the server (in this case: [1, 2, 3])
     console.log(data)
-
+    
     // Emit a custom event called 'thankyou' to the server
     // This sends a message back — you could attach data too (ex: socket.emit('thankyou', 'Hello!'))
     socket.emit('thankyou', [4,5,6])
