@@ -14,7 +14,7 @@ app.use(express.static('public'))
 
 // Start the server and listen for HTTP connections on port 4000
 // app.listen() returns an instance of the underlying Node HTTP server
-const expressServer = app.listen(4000)
+const expressServer = app.listen(6969)
 
 // Import the Socket.IO library (real-time bidirectional communication)
 const socketio = require('socket.io')

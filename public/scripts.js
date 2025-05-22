@@ -1,7 +1,7 @@
 // Connect to the Socket.IO server at localhost:4000
 // This uses the 'io()' function from the socket.io.min.js script (loaded in HTML)
 // This returns a socket object that represents the connection
-const socket = io('http://localhost:4000')
+const socket = io('http://localhost:6969')
 
 // --- SOCKET.IO CONCEPTS ---
 // .emit(eventName, data) → Sends an event to the server
