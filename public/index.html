@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <!-- Makes the site responsive and scale properly on mobile -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-
-  <!-- Link to our stylesheet (styles.css) for visual formatting -->
-  <link rel="stylesheet" href="styles.css">
-
-  <!-- Load Socket.IO client library -->
-  <!-- This script is served automatically from the server because socket.io is installed -->
-  <script src="/socket.io/socket.io.min.js"></script>
-
-  <!-- Load our custom client script after socket.io -->
-  <script src="scripts.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Just a simple heading to confirm the page is working -->
-  <h1>express server is working</h1>
-  <p id="hellothere"></p>
+    <div class="custom-container">
+        <form class="form-row" id="messages-form">
+            <div class="form-input">
+                <input id="user-message" type="text" placeholder="Enter message here" />
+            </div>
+            <div class="form-button">
+                <input class="submit-button" type="submit" value="Send Message!" />
+            </div>
+        </form>
+        <div class="message-list">
+            <ul id="messages">
+                <!-- Starts empty, populated by Socket.io and JavaScript -->
+            </ul>
+        </div>        
+    </div>
+    <script src="/socket.io/socket.io.min.js"></script>
+    <script src="scripts.js"></script>    
 </body>
 </html>

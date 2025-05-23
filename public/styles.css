@@ -1,29 +1,68 @@
-/* Adds spacing above any element with the 'container' class */
-.container {
-  margin-top: 30px;
-}
-
-/* Style all input fields to be taller and full width */
-input {
-  height: 35px;
-  width: 100%;
-}
-
-/* Removes bullet points and spacing from a <ul> with ID 'messages' */
-#messages {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-/* Add padding to each list item inside #messages */
-#messages li {
-  padding: 5px 10px;
-}
-
-/* Style every odd-numbered message with a light gray background */
-#message li:nth-child(odd) {
-  background: #aaa;
+/* Reset & Base Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
 
 
+.custom-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Form Layout */
+.form-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.form-input {
+    flex: 1 1 60%;
+}
+
+.form-button {
+    flex: 1 1 20%;
+}
+
+/* Input Field */
+#user-message {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #0b5ed7;
+}
+
+/* Message list */
+.message-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.message-list li {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}

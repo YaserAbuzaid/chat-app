@@ -24,7 +24,7 @@ const socketio = require('socket.io')
 const io = socketio(expressServer, {
     // Configuration options can go here (like CORS settings)
     cors: [
-        'localhost:6969'
+        'http://localhost:6969'
     ]
 })
 
@@ -39,11 +39,17 @@ io.on('connect', socket => {
 
     // Emit a custom event called 'welcome' to this specific socket (client)
     // You can pass any kind of data as the second argument (string, object, array, etc.)
-    socket.emit('welcome', [1, 2, 3])
+    // socket.emit('welcome', [1, 2, 3])
 
-    // Listen for a 'thankyou' event from the client
-    // Just for demonstration — you could log or do something on response
-    socket.on('thankyou', data => {
-        console.log("message from client", data)
+    // // Listen for a 'thankyou' event from the client
+    // // Just for demonstration — you could log or do something on response
+    // socket.on('thankyou', data => {
+    //     console.log("message from client", data)
+    // })
+
+    socket.on('messageFromClientToServer', newMessage=>{
+        // passsing the message to everyone connected
+
+        io.emit('messageFromServerToAllClients', newMessage)
     })
 })

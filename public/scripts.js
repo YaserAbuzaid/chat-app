@@ -1,22 +1,59 @@
-// // Connect to the Socket.IO server at localhost:4000
-// // This uses the 'io()' function from the socket.io.min.js script (loaded in HTML)
-// // This returns a socket object that represents the connection
-// const socket = io('http://localhost:6969')
+// Connect to the Socket.IO server at localhost:4000
+// This uses the 'io()' function from the socket.io.min.js script (loaded in HTML)
+// This returns a socket object that represents the connection
+const socket = io('http://localhost:6969',{
+    auth: {
+        secret: "secretsssss"
+    },
 
-// // --- SOCKET.IO CONCEPTS ---
-// // .emit(eventName, data) → Sends an event to the server
-// // .on(eventName, callback) → Listens for an event from the server
+    query:{
+        meaningOfLife: 69
+    }
+})
 
-// // Listen for a custom event named 'welcome' sent from the server
-// // When that event is received, run the callback function with the received data
-// socket.on('welcome', data => {
-//     // Log the data received from the server (in this case: [1, 2, 3])
-//     console.log(data)
+// --- SOCKET.IO CONCEPTS ---
+// .emit(eventName, data) → Sends an event to the server
+// .on(eventName, callback) → Listens for an event from the server
+
+// Listen for a custom event named 'welcome' sent from the server
+// When that event is received, run the callback function with the received data
+socket.on('welcome', data => {
+    // Log the data received from the server (in this case: [1, 2, 3])
+    console.log(data)
     
-//     // Emit a custom event called 'thankyou' to the server
-//     // This sends a message back — you could attach data too (ex: socket.emit('thankyou', 'Hello!'))
-//     socket.emit('thankyou', [4,5,6])
-// })
+    // Emit a custom event called 'thankyou' to the server
+    // This sends a message back — you could attach data too (ex: socket.emit('thankyou', 'Hello!'))
+    socket.emit('thankyou', [4,5,6])
+})
+
+
+socket.on('messageFromServerToAllClients', newMessage=>{
+    document.getElementById('messages').innerHTML += `<li>${newMessage}</li>`
+})
+
+document.getElementById('messages-form').addEventListener('submit', e=>{
+    e.preventDefault()
+    const newMessage = document.getElementById('user-message').value
+    document.getElementById('user-message').value = ""
+// this socket is sending an event to the serevr
+    socket.emit('messageFromClientToServer', newMessage)
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -26,59 +63,59 @@
 
 ///////////////////////////////
 
-// Connect to the Socket.IO server at 'http://localhost:6969'
-// The io() function is provided by the Socket.IO client library (socket.io.min.js)
-// It returns a socket object that represents the connection to the server
-const socket = io('http://localhost:6969', {
-    // Send authentication data with the connection
-    auth: {
-        secret: "This is a secret"  // Could be a token or password for server validation
-    },
-    // Send query parameters with the connection URL
-    query: {
-        meaningOfLife: 42  // Custom data, can be anything useful to the server
-    }
-})
+// // Connect to the Socket.IO server at 'http://localhost:6969'
+// // The io() function is provided by the Socket.IO client library (socket.io.min.js)
+// // It returns a socket object that represents the connection to the server
+// const socket = io('http://localhost:6969', {
+//     // Send authentication data with the connection
+//     auth: {
+//         secret: "This is a secret"  // Could be a token or password for server validation
+//     },
+//     // Send query parameters with the connection URL
+//     query: {
+//         meaningOfLife: 42  // Custom data, can be anything useful to the server
+//     }
+// })
 
-// Just like on the server, the socket object has:
-// - an 'on' method to listen for events from the server
-// - an 'emit' method to send events to the server
+// // Just like on the server, the socket object has:
+// // - an 'on' method to listen for events from the server
+// // - an 'emit' method to send events to the server
 
-// Listen for the 'welcome' event sent from the server
-socket.on('welcome', data => {
-    // When the server emits 'welcome', run this callback
-    // 'data' contains whatever the server sent with the event
-    console.log(data)  // Log the welcome data to the browser console
+// // Listen for the 'welcome' event sent from the server
+// socket.on('welcome', data => {
+//     // When the server emits 'welcome', run this callback
+//     // 'data' contains whatever the server sent with the event
+//     console.log(data)  // Log the welcome data to the browser console
 
-    // Send a 'thankYou' event back to the server
-    // Here we send an array [4, 5, 6] as the event payload
-    socket.emit('thankYou', [4, 5, 6])
-})
+//     // Send a 'thankYou' event back to the server
+//     // Here we send an array [4, 5, 6] as the event payload
+//     socket.emit('thankYou', [4, 5, 6])
+// })
 
-// Listen for the 'newClient' event sent by the server
-socket.on('newClient', data => {
-    // This event likely means a new user connected to the server
-    console.log('Message to all clients: A new socket has joined', data)
-})
+// // Listen for the 'newClient' event sent by the server
+// socket.on('newClient', data => {
+//     // This event likely means a new user connected to the server
+//     console.log('Message to all clients: A new socket has joined', data)
+// })
 
-// Listen for the 'messageFromServerToAllClients' event
-socket.on('messageFromServerToAllClients', newMessage => {
-    // When this event occurs, add the message to a list in the HTML
-    // 'messages' is the ID of an element (like <ul>) in your HTML document
-    document.getElementById('messages').innerHTML += `<li>${newMessage}</li>`
-})
+// // Listen for the 'messageFromServerToAllClients' event
+// socket.on('messageFromServerToAllClients', newMessage => {
+//     // When this event occurs, add the message to a list in the HTML
+//     // 'messages' is the ID of an element (like <ul>) in your HTML document
+//     document.getElementById('messages').innerHTML += `<li>${newMessage}</li>`
+// })
 
-// Add an event listener to a form with the ID 'messages-form'
-// This listens for the form's submit event (user sending a message)
-document.getElementById('messages-form').addEventListener('submit', e => {
-    e.preventDefault()  // Prevent the form from refreshing the page
+// // Add an event listener to a form with the ID 'messages-form'
+// // This listens for the form's submit event (user sending a message)
+// document.getElementById('messages-form').addEventListener('submit', e => {
+//     e.preventDefault()  // Prevent the form from refreshing the page
 
-    // Get the text input value from an input with the ID 'user-message'
-    const newMessage = document.getElementById('user-message').value
+//     // Get the text input value from an input with the ID 'user-message'
+//     const newMessage = document.getElementById('user-message').value
 
-    // Clear the input box after getting the message
-    document.getElementById('user-message').value = ""
+//     // Clear the input box after getting the message
+//     document.getElementById('user-message').value = ""
 
-    // Emit a 'messageFromClientToServer' event, sending the message to the server
-    socket.emit('messageFromClientToServer', newMessage)
-})
+//     // Emit a 'messageFromClientToServer' event, sending the message to the server
+//     socket.emit('messageFromClientToServer', newMessage)
+// })
