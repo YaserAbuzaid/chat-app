@@ -23,10 +23,15 @@ const socketio = require('socket.io')
 // This allows both HTTP and WebSocket connections to run on the same port (4000)
 const io = socketio(expressServer, {
     // Configuration options can go here (like CORS settings)
+    cors: [
+        'localhost:6969'
+    ]
 })
 
 // Listen for socket connections from clients
 // 'connect' is a built-in event triggered automatically by Socket.IO
+
+// on means its waiting for connect to show up once it id==did it will do what it was doing
 io.on('connect', socket => {
     // Each client that connects is assigned a unique socket.id
     // This logs their connection to the terminal
