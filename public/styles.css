@@ -4,7 +4,9 @@ body {
     font-family: Arial, sans-serif;
 }
 
-
+.buttond{
+    border: #0b5ed7 solid 5px;
+}
 .custom-container {
     max-width: 800px;
     margin: 0 auto;

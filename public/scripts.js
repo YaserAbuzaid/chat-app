@@ -28,7 +28,11 @@ socket.on('welcome', data => {
 
 
 socket.on('messageFromServerToAllClients', newMessage=>{
-    document.getElementById('messages').innerHTML += `<li>${newMessage}</li>`
+    document.getElementById('messages').innerHTML += `<li>${newMessage}
+     <button class="buttond" onclick="this.parentElement.remove()" >🗑️</button>
+     <button class="buttond" onclick="this.parentElement.value =''" >✏️</button>
+     
+     </li>`
 })
 
 document.getElementById('messages-form').addEventListener('submit', e=>{
