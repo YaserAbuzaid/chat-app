@@ -23,9 +23,7 @@ const socketio = require('socket.io')
 // This allows both HTTP and WebSocket connections to run on the same port (4000)
 const io = socketio(expressServer, {
     // Configuration options can go here (like CORS settings)
-    cors: [
-        'http://localhost:6969'
-    ]
+    cors: { origin: "*"}
 })
 
 // Listen for socket connections from clients

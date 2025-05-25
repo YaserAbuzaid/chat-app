@@ -1,63 +1,45 @@
-/* Reset & Base Styles */
+/* Base Styles */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.buttond{
-    border: #0b5ed7 solid 5px;
-}
 .custom-container {
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: 600px;
+    margin: 40px auto;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     padding: 20px;
-    text-align: center;
 }
 
-/* Form Layout */
-.form-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Header */
+.chat-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #0d6efd;
+}
+
+.chat-status {
+    font-size: 0.9rem;
+    color: gray;
     margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 10px;
 }
 
-.form-input {
-    flex: 1 1 60%;
-}
-
-.form-button {
-    flex: 1 1 20%;
-}
-
-/* Input Field */
-#user-message {
-    width: 100%;
+/* Messages Area */
+.message-list {
+    max-height: 300px;
+    overflow-y: auto;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
     padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    margin-bottom: 20px;
+    overflow-y: scroll;
 }
 
-.submit-button {
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    background-color: #0d6efd;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.submit-button:hover {
-    background-color: #0b5ed7;
-}
-
-/* Message list */
 .message-list ul {
     list-style-type: none;
     padding: 0;
@@ -65,6 +47,66 @@ body {
 }
 
 .message-list li {
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    background: #eef1f5;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    text-align: left;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Form */
+.form-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form-input {
+    flex: 1 1 70%;
+}
+
+.form-button {
+    flex: 1 1 25%;
+}
+
+/* Input */
+#user-message {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border 0.2s ease-in-out;
+}
+
+#user-message:focus {
+    border-color: #0d6efd;
+}
+
+/* Button */
+.submit-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.submit-button:hover {
+    background-color: #0b5ed7;
+    transform: scale(1.03);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
