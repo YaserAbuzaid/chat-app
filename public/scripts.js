@@ -1,137 +1,118 @@
-// Connect to the Socket.IO server at localhost:4000
-// This uses the 'io()' function from the socket.io.min.js script (loaded in HTML)
-// This returns a socket object that represents the connection
+let username = prompt('Please enter your username:');
+username = (username || '').trim();
+if (!username) username = 'Guest' + Math.floor(Math.random() * 1000);
 
-let username = prompt('please enter your username')
-const socket = io('https://8m0hmpv1-6969.inc1.devtunnels.ms', {
-    auth: {
-        secret: "secretsssss"
-    },
-    query: {
-        meaningOfLife: 69
-    }
+const statusEl = document.getElementById('chat-status');
+const formEl = document.getElementById('messages-form');
+const inputEl = document.getElementById('user-message');
+const messagesEl = document.getElementById('messages');
+const msgBox = document.getElementById('message-list');
+
+function setStatus(state) {
+  statusEl.classList.remove('ok', 'bad', 'warn');
+
+  if (state === 'ok') {
+    statusEl.textContent = '🟢 Connected';
+    statusEl.classList.add('ok');
+  } else if (state === 'warn') {
+    statusEl.textContent = '🟡 Reconnecting…';
+    statusEl.classList.add('warn');
+  } else {
+    statusEl.textContent = '🔴 Disconnected';
+    statusEl.classList.add('bad');
+  }
+}
+
+function formatTime(ts) {
+  const d = new Date(ts);
+  return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
+function scrollToBottom() {
+  msgBox.scrollTop = msgBox.scrollHeight;
+}
+
+function addMessageToUI(data) {
+  const li = document.createElement('li');
+
+  // Top row: username + time
+  const top = document.createElement('div');
+  top.className = 'msg-top';
+
+  const user = document.createElement('span');
+  user.className = 'msg-user';
+  user.textContent = data.username ?? 'Unknown';
+
+  const time = document.createElement('span');
+  time.className = 'msg-time';
+  time.textContent = data.createdAt ? formatTime(data.createdAt) : '';
+
+  top.appendChild(user);
+  top.appendChild(time);
+
+  // Text (safe)
+  const text = document.createElement('div');
+  text.className = 'msg-text';
+  text.textContent = data.newMessage ?? '';
+
+  li.appendChild(top);
+  li.appendChild(text);
+
+  // Buttons ONLY for my messages (simple client-side rule)
+  if (data.username === username) {
+    const del = document.createElement('button');
+    del.className = 'buttond';
+    del.textContent = '🗑️ Delete';
+    del.onclick = () => li.remove();
+
+    const edit = document.createElement('button');
+    edit.className = 'buttond';
+    edit.textContent = '✏️ Edit';
+    edit.onclick = () => {
+      const next = prompt('Edit your message:', text.textContent);
+      if (next === null) return;
+      const trimmed = next.trim();
+      if (!trimmed) return;
+      text.textContent = trimmed;
+    };
+
+    li.appendChild(del);
+    li.appendChild(edit);
+  }
+
+  messagesEl.appendChild(li);
+  scrollToBottom();
+}
+
+// If you want to connect to a remote URL, put it here:
+// const socket = io('https://YOUR_URL_HERE');
+const socket = io();
+
+socket.on('connect', () => {
+  setStatus('ok');
+  // optional: announce join
+  socket.emit('joined', { username });
 });
 
-socket.on('connect', ()=>{
-    document.getElementById('chat-status').innerHTML = '<span style="color: green; font-weight:bolder; font-size:30px;">🟢Connected</span>'
-} )
+socket.on('disconnect', () => setStatus('bad'));
+socket.io.on('reconnect_attempt', () => setStatus('warn'));
 
-socket.on('disconnect', ()=>{
-    document.getElementById('chat-status').innerHTML = '<span style="color: red; font-weight:bolder; font-size:30px;">🔴Disconnected</span>'
-} )
-// --- SOCKET.IO CONCEPTS ---
-// .emit(eventName, data) → Sends an event to the server
-// .on(eventName, callback) → Listens for an event from the server
+socket.on('messageFromServerToAllClients', (data) => {
+  addMessageToUI(data);
+});
 
-// Listen for a custom event named 'welcome' sent from the server
-// When that event is received, run the callback function with the received data
-socket.on('welcome', data => {
-    
-    // Log the data received from the server (in this case: [1, 2, 3])
-    console.log(data)
-    
-    
-    // Emit a custom event called 'thankyou' to the server
-    // This sends a message back — you could attach data too (ex: socket.emit('thankyou', 'Hello!'))
-    socket.emit('thankyou', [4,5,6])
-})
+formEl.addEventListener('submit', (e) => {
+  e.preventDefault();
 
+  const msg = inputEl.value.trim();
+  if (!msg) return;
 
-socket.on('messageFromServerToAllClients', data=>{
-    document.getElementById('messages').innerHTML += `<li>${data.username}: ${ data.newMessage} 
-     <button class="buttond" onclick="this.parentElement.remove()" >🗑️</button>
-     <button class="buttond" onclick="this.parentElement.innerHTML = ${data.username}: prompt('enter new mesage') " >✏️</button>
-     
-     </li>`
-     
-})
+  const data = {
+    newMessage: msg,
+    username: username,
+    createdAt: Date.now()
+  };
 
-document.getElementById('messages-form').addEventListener('submit', e=>{
-    e.preventDefault()
-    const data ={
-        newMessage: document.getElementById('user-message').value,
-        username: username
-    }
-    document.getElementById('user-message').value = ""
-// this socket is sending an event to the serevr
-    socket.emit('messageFromClientToServer', data)
-
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///////////////////////////////
-
-// // Connect to the Socket.IO server at 'http://localhost:6969'
-// // The io() function is provided by the Socket.IO client library (socket.io.min.js)
-// // It returns a socket object that represents the connection to the server
-// const socket = io('http://localhost:6969', {
-//     // Send authentication data with the connection
-//     auth: {
-//         secret: "This is a secret"  // Could be a token or password for server validation
-//     },
-//     // Send query parameters with the connection URL
-//     query: {
-//         meaningOfLife: 42  // Custom data, can be anything useful to the server
-//     }
-// })
-
-// // Just like on the server, the socket object has:
-// // - an 'on' method to listen for events from the server
-// // - an 'emit' method to send events to the server
-
-// // Listen for the 'welcome' event sent from the server
-// socket.on('welcome', data => {
-//     // When the server emits 'welcome', run this callback
-//     // 'data' contains whatever the server sent with the event
-//     console.log(data)  // Log the welcome data to the browser console
-
-//     // Send a 'thankYou' event back to the server
-//     // Here we send an array [4, 5, 6] as the event payload
-//     socket.emit('thankYou', [4, 5, 6])
-// })
-
-// // Listen for the 'newClient' event sent by the server
-// socket.on('newClient', data => {
-//     // This event likely means a new user connected to the server
-//     console.log('Message to all clients: A new socket has joined', data)
-// })
-
-// // Listen for the 'messageFromServerToAllClients' event
-// socket.on('messageFromServerToAllClients', newMessage => {
-//     // When this event occurs, add the message to a list in the HTML
-//     // 'messages' is the ID of an element (like <ul>) in your HTML document
-//     document.getElementById('messages').innerHTML += `<li>${newMessage}</li>`
-// })
-
-// // Add an event listener to a form with the ID 'messages-form'
-// // This listens for the form's submit event (user sending a message)
-// document.getElementById('messages-form').addEventListener('submit', e => {
-//     e.preventDefault()  // Prevent the form from refreshing the page
-
-//     // Get the text input value from an input with the ID 'user-message'
-//     const newMessage = document.getElementById('user-message').value
-
-//     // Clear the input box after getting the message
-//     document.getElementById('user-message').value = ""
-
-//     // Emit a 'messageFromClientToServer' event, sending the message to the server
-//     socket.emit('messageFromClientToServer', newMessage)
-// })
+  inputEl.value = '';
+  socket.emit('messageFromClientToServer', data);
+});

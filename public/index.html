@@ -1,31 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Socket.IO Chat</title>
-    <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Socket.IO Chat</title>
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-    <div class="custom-container">
-        <div class="chat-header">💬The Best Ever Chat App 😎😏</div>
-        <div class="chat-status" id="chat-status" style="font-size: 30px; font-weight: bolder;">Connecting...</div>
-        <div class="message-list" id="message-list">
-            <ul id="messages">
-                <!-- Messages will appear here -->
-            </ul>
-        </div>
-        <form class="form-row" id="messages-form" autocomplete="off">
-            <div class="form-input">
-                <input id="user-message" type="text" placeholder="Type your message..." autocomplete="off" />
-            </div>
-            <div class="form-button">
-                <button class="submit-button" type="submit">Send</button>
+  <div class="custom-container">
+    <div class="chat-header">💬 The Best Ever Chat App 😎😏</div>
 
-            </div>
-        </form>
+    <div class="chat-status" id="chat-status">Connecting…</div>
+
+    <div class="message-list" id="message-list">
+      <ul id="messages"></ul>
     </div>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="scripts.js"></script>
+
+    <form class="form-row" id="messages-form" autocomplete="off">
+      <div class="form-input">
+        <input id="user-message" type="text" placeholder="Type your message..." autocomplete="off" maxlength="500" />
+      </div>
+      <div class="form-button">
+        <button class="submit-button" type="submit">Send</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/scripts.js"></script>
 </body>
 </html>
