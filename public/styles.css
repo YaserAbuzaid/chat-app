@@ -1,4 +1,4 @@
-:root{
+/* :root{
   --bg:#f4f6f9;
   --card:#ffffff;
   --text:#111827;
@@ -172,4 +172,4 @@ body{
 @media (max-width:520px){
   .form-row{ flex-wrap:wrap; }
   .form-button{ flex:1 1 100%; }
-}
+} */
